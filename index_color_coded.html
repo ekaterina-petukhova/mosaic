@@ -18,6 +18,12 @@
   --teal-pale:   #e0f2ef;
   --gold:        #b07d3a;
   --gold-light:  #d4a05a;
+
+  /* Active entry-point theme. JS sets body[data-offer]. */
+  --accent:       #0b8f7e;
+  --accent-light: #12b09c;
+  --accent-pale:  #e0f2ef;
+  --accent-rgb:   11, 143, 126;
   --text:        #1a1f2e;
   --text-mid:    #4a5168;
   --text-light:  #8a8fa8;
@@ -41,6 +47,28 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
 }
+
+/* ─── ACTIVE OFFER COLOR THEMES ──────────────────────────────────── */
+body[data-offer="platform"] {
+  --accent:       #0b8f7e;
+  --accent-light: #12b09c;
+  --accent-pale:  #e0f2ef;
+  --accent-rgb:   11, 143, 126;
+}
+
+body[data-offer="service"] {
+  --accent:       #b07d3a;
+  --accent-light: #d4a05a;
+  --accent-pale:  #f4eadc;
+  --accent-rgb:   176, 125, 58;
+}
+
+body[data-offer="hardware"] {
+  --accent:       #3a6898;
+  --accent-light: #5d8ec1;
+  --accent-pale:  #e2ebf3;
+  --accent-rgb:   58, 104, 152;
+}
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: inherit; border: none; background: none; }
@@ -55,7 +83,7 @@ h4 { font-size: 1.1rem; font-weight: 500; font-family: 'DM Sans', sans-serif; }
 p { color: var(--text-mid); font-size: 0.95rem; line-height: 1.7; }
 .label {
   font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--teal); font-family: 'DM Mono', monospace;
+  text-transform: uppercase; color: var(--accent); font-family: 'DM Mono', monospace;
 }
 .mono { font-family: 'DM Mono', monospace; }
 
@@ -92,14 +120,14 @@ nav {
   font-size: 0.82rem; font-weight: 500; color: var(--text-mid);
   letter-spacing: 0.04em; transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--teal); }
+.nav-links a:hover { color: var(--accent); }
 .nav-cta {
   background: var(--navy); color: var(--white) !important;
   padding: 8px 20px; border-radius: 6px;
   font-size: 0.82rem !important; letter-spacing: 0.04em;
   transition: background 0.2s !important;
 }
-.nav-cta:hover { background: var(--teal) !important; color: var(--white) !important; }
+.nav-cta:hover { background: var(--accent) !important; color: var(--white) !important; }
 
 /* ─── HERO ───────────────────────────────────────────────────────── */
 #hero {
@@ -113,26 +141,25 @@ nav {
   content: '';
   position: absolute; top: -200px; right: -200px;
   width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(11,143,126,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.07) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero-left { padding: 80px 64px 80px 80px; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--teal-pale); border: 1px solid rgba(11,143,126,0.2);
+  background: var(--accent-pale); border: 1px solid rgba(var(--accent-rgb), 0.2);
   border-radius: 20px; padding: 6px 14px; margin-bottom: 28px;
 }
 .hero-badge-dot {
   width: 6px; height: 6px; border-radius: 50%;
-  background: var(--teal); animation: pulse 2s infinite;
+  background: var(--accent); animation: pulse 2s infinite;
 }
 @keyframes pulse {
   0%,100%{ opacity:1; transform:scale(1); }
   50%{ opacity:0.5; transform:scale(1.3); }
 }
 .hero-title { color: var(--navy); margin-bottom: 20px; transition: var(--transition); }
-.hero-sub { font-size: 1rem; max-width: 420px; margin-bottom: 16px; transition: var(--transition); }
-.hero-mosaic-image {margin-bottom: 16px; max-width: 420px; transition: var(--transition);}
+.hero-sub { font-size: 1rem; max-width: 420px; margin-bottom: 36px; transition: var(--transition); }
 .offer-tabs {
   display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap;
 }
@@ -141,19 +168,29 @@ nav {
   border: 1.5px solid var(--border-dark); color: var(--text-mid);
   background: transparent; transition: all 0.25s; letter-spacing: 0.02em;
 }
-.offer-tab:hover { border-color: var(--teal); color: var(--teal); }
+.offer-tab:hover { border-color: var(--accent); color: var(--accent); }
 .offer-tab.active {
-  background: var(--navy); border-color: var(--navy);
-  color: var(--white); box-shadow: 0 4px 16px rgba(13,28,46,0.2);
+  background: var(--accent); border-color: var(--accent);
+  color: var(--white); box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.28);
+}
+
+/* Keep the selected entry point visually connected across the page. */
+.offer-tab.active,
+.offer-card.active,
+.exp-meta-card,
+.data-kpi,
+.step-card,
+.faq-item.open {
+  transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s, color 0.25s;
 }
 .hero-cta-group { display: flex; gap: 12px; align-items: center; }
 .btn-primary {
-  background: var(--teal); color: var(--white);
+  background: var(--accent); color: var(--white);
   padding: 13px 28px; border-radius: 8px;
   font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em;
-  transition: all 0.25s; box-shadow: 0 4px 16px rgba(11,143,126,0.28);
+  transition: all 0.25s; box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.28);
 }
-.btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(11,143,126,0.35); }
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(var(--accent-rgb), 0.35); }
 .btn-secondary {
   color: var(--text-mid); font-size: 0.88rem; font-weight: 500;
   padding: 13px 20px; border-radius: 8px;
@@ -170,7 +207,7 @@ nav {
 .hero-right::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(11,143,126,0.15) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 30% 50%, rgba(var(--accent-rgb), 0.15) 0%, transparent 60%);
 }
 .hero-panel {
   width: 92%; max-width: 480px;
@@ -187,9 +224,9 @@ nav {
 .panel-title { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
 .panel-status {
   display: flex; align-items: center; gap: 6px;
-  font-size: 0.7rem; color: var(--teal-light); font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; color: var(--accent-light); font-family: 'DM Mono', monospace;
 }
-.status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal-light); animation: pulse 2s infinite; }
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-light); animation: pulse 2s infinite; }
 
 /* Dashboard KPI cards in hero */
 .kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
@@ -199,7 +236,7 @@ nav {
   transition: var(--transition);
 }
 .kpi-val { font-size: 1.5rem; font-weight: 600; color: var(--white); font-family: 'DM Mono', monospace; transition: var(--transition); }
-.kpi-unit { font-size: 0.65rem; color: var(--teal-light); letter-spacing: 0.06em; font-family: 'DM Mono', monospace; }
+.kpi-unit { font-size: 0.65rem; color: var(--accent-light); letter-spacing: 0.06em; font-family: 'DM Mono', monospace; }
 .kpi-lbl { font-size: 0.62rem; color: rgba(255,255,255,0.4); margin-top: 2px; }
 
 /* Mini chart */
@@ -217,8 +254,8 @@ nav {
   font-size: 0.72rem; color: rgba(255,255,255,0.6);
 }
 .result-bar-wrap { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; }
-.result-bar { height: 100%; border-radius: 2px; background: var(--teal-light); transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
-.result-pct { font-size: 0.68rem; color: var(--teal-light); font-family: 'DM Mono', monospace; min-width: 32px; text-align: right; }
+.result-bar { height: 100%; border-radius: 2px; background: var(--accent-light); transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.result-pct { font-size: 0.68rem; color: var(--accent-light); font-family: 'DM Mono', monospace; min-width: 32px; text-align: right; }
 
 /* ─── OFFER CARDS ────────────────────────────────────────────────── */
 #offers { padding: 80px 0; background: var(--white); }
@@ -230,25 +267,25 @@ nav {
 }
 .offer-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--teal); transform: scaleX(0); transform-origin: left;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
   transition: transform 0.3s;
 }
 .offer-card:hover::before,
 .offer-card.active::before { transform: scaleX(1); }
 .offer-card.active {
-  border-color: var(--teal); box-shadow: 0 8px 40px rgba(11,143,126,0.12);
+  border-color: var(--accent); box-shadow: 0 8px 40px rgba(var(--accent-rgb), 0.12);
 }
-.offer-card:hover { border-color: rgba(11,143,126,0.4); box-shadow: var(--shadow); }
+.offer-card:hover { border-color: rgba(var(--accent-rgb), 0.4); box-shadow: var(--shadow); }
 .offer-icon {
   width: 48px; height: 48px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 20px; font-size: 1.4rem;
 }
-.offer-icon.platform { background: rgba(11,143,126,0.1); }
+.offer-icon.platform { background: rgba(var(--accent-rgb), 0.1); }
 .offer-icon.service  { background: rgba(176,125,58,0.1); }
 .offer-icon.hardware { background: rgba(13,28,46,0.08); }
 .offer-card h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--navy); }
-.offer-tagline { font-size: 0.82rem; font-weight: 600; color: var(--teal); margin-bottom: 10px; }
+.offer-tagline { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-bottom: 10px; }
 .offer-card p { font-size: 0.85rem; margin-bottom: 20px; }
 .offer-target {
   display: inline-flex; align-items: center; gap: 6px;
@@ -260,10 +297,10 @@ nav {
   font-size: 0.8rem; color: var(--text-mid); padding: 4px 0;
   display: flex; align-items: flex-start; gap: 8px;
 }
-.offer-includes li::before { content: '–'; color: var(--teal); flex-shrink: 0; }
+.offer-includes li::before { content: '–'; color: var(--accent); flex-shrink: 0; }
 .offer-outcome {
   background: var(--bg); border-radius: 8px; padding: 12px 14px;
-  font-size: 0.78rem; color: var(--text-mid); border-left: 2px solid var(--teal);
+  font-size: 0.78rem; color: var(--text-mid); border-left: 2px solid var(--accent);
 }
 .offer-outcome strong { color: var(--navy); display: block; margin-bottom: 2px; font-size: 0.75rem; }
 
@@ -300,7 +337,7 @@ nav {
   font-size: 2rem; font-weight: 600; color: var(--navy);
   font-family: 'DM Mono', monospace; line-height: 1.2;
 }
-.data-kpi .unit { font-size: 0.8rem; color: var(--teal); font-family: 'DM Mono', monospace; }
+.data-kpi .unit { font-size: 0.8rem; color: var(--accent); font-family: 'DM Mono', monospace; }
 .data-kpi .desc { font-size: 0.72rem; color: var(--text-light); margin-top: 4px; }
 
 .chart-container {
@@ -321,9 +358,9 @@ nav {
 }
 .step-num-mini {
   width: 24px; height: 24px; border-radius: 50%;
-  background: rgba(11,143,126,0.25); border: 1px solid var(--teal);
+  background: rgba(var(--accent-rgb), 0.25); border: 1px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.65rem; color: var(--teal-light); font-family: 'DM Mono', monospace;
+  font-size: 0.65rem; color: var(--accent-light); font-family: 'DM Mono', monospace;
   flex-shrink: 0; margin-top: 1px;
 }
 .step-content-mini h5 { font-size: 0.82rem; font-weight: 500; color: var(--white); margin-bottom: 2px; }
@@ -346,7 +383,7 @@ nav {
 .step-card:last-child::after { display: none; }
 .step-num {
   width: 36px; height: 36px; border-radius: 50%;
-  background: var(--teal-pale); color: var(--teal);
+  background: var(--accent-pale); color: var(--accent);
   display: flex; align-items: center; justify-content: center;
   font-size: 0.8rem; font-weight: 600; margin-bottom: 16px;
   font-family: 'DM Mono', monospace;
@@ -366,7 +403,7 @@ nav {
 .cert-point { display: flex; gap: 16px; }
 .cert-point-icon {
   width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
-  background: var(--teal-pale); display: flex; align-items: center; justify-content: center;
+  background: var(--accent-pale); display: flex; align-items: center; justify-content: center;
   font-size: 1rem; margin-top: 2px;
 }
 .cert-point h4 { margin-bottom: 4px; font-size: 0.9rem; }
@@ -396,12 +433,12 @@ nav {
 .compare-table tr:nth-child(even) td { background: rgba(0,0,0,0.01); }
 .compare-table td:first-child { font-weight: 600; color: var(--text); font-size: 0.78rem; }
 .highlight-col {
-  background: rgba(11,143,126,0.04) !important;
-  border-left: 2px solid var(--teal);
-  border-right: 2px solid var(--teal);
+  background: rgba(var(--accent-rgb), 0.04) !important;
+  border-left: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
 }
-.highlight-col-top { border-top: 2px solid var(--teal); }
-.highlight-col-bottom { border-bottom: 2px solid var(--teal) !important; }
+.highlight-col-top { border-top: 2px solid var(--accent); }
+.highlight-col-bottom { border-bottom: 2px solid var(--accent) !important; }
 .dot-green { color: #22c55e; }
 .dot-amber { color: #f59e0b; }
 .dot-red { color: #ef4444; }
@@ -420,7 +457,7 @@ nav {
   font-size: 0.88rem; font-weight: 500; color: var(--navy);
   background: var(--white); cursor: pointer; gap: 12px;
 }
-.faq-chevron { transition: transform 0.25s; flex-shrink: 0; color: var(--teal); }
+.faq-chevron { transition: transform 0.25s; flex-shrink: 0; color: var(--accent); }
 .faq-item.open .faq-chevron { transform: rotate(180deg); }
 .faq-a {
   max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s;
@@ -433,7 +470,7 @@ nav {
 #cta::before {
   content: ''; position: absolute;
   top: -200px; left: -200px; width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(11,143,126,0.15) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15) 0%, transparent 65%);
   pointer-events: none;
 }
 #cta::after {
@@ -451,7 +488,7 @@ nav {
   padding: 13px 28px; border-radius: 8px; font-size: 0.88rem; font-weight: 600;
   transition: all 0.25s; letter-spacing: 0.02em;
 }
-.btn-light:hover { background: var(--teal-pale); }
+.btn-light:hover { background: var(--accent-pale); }
 .btn-outline-light {
   border: 1.5px solid rgba(255,255,255,0.3); color: var(--white);
   padding: 13px 28px; border-radius: 8px; font-size: 0.88rem; font-weight: 500;
@@ -477,7 +514,7 @@ footer {
 .footer-links h5 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px; font-family: 'DM Mono', monospace; }
 .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .footer-links li a { font-size: 0.82rem; color: rgba(255,255,255,0.55); transition: color 0.2s; }
-.footer-links li a:hover { color: var(--teal-light); }
+.footer-links li a:hover { color: var(--accent-light); }
 .footer-bottom {
   padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06);
   display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
@@ -492,7 +529,7 @@ footer {
 .section-header p { max-width: 480px; }
 
 /* ─── UTILITY ────────────────────────────────────────────────────── */
-.text-teal { color: var(--teal); }
+.text-teal { color: var(--accent); }
 .text-navy { color: var(--navy); }
 .mt-4 { margin-top: 16px; }
 .mt-8 { margin-top: 32px; }
@@ -503,7 +540,7 @@ footer {
   font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
   font-family: 'DM Mono', monospace;
 }
-.tag-teal { background: var(--teal-pale); color: var(--teal); }
+.tag-teal { background: var(--accent-pale); color: var(--accent); }
 .tag-gold { background: rgba(176,125,58,0.1); color: var(--gold); }
 .tag-navy { background: rgba(13,28,46,0.08); color: var(--navy); }
 
@@ -566,13 +603,10 @@ footer {
   <div class="hero-left">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
-      <span class="label" style="color:var(--teal);font-size:0.65rem;">3D Biological Testing · Cosmetic R&D</span>
+      <span class="label" style="color:var(--accent);font-size:0.65rem;">3D Biological Testing · Cosmetic R&D</span>
     </div>
-    <h1 class="hero-title" id="hero-title">The 3D Platform<br>for <em>Ingredient</em><br>Performance</h1>
+    <h1 class="hero-title" id="hero-title">The 3D Platform<br>for <em>Ingredient</em><br>Performance.</h1>
     <p class="hero-sub" id="hero-sub">Mosaic delivers quantitative biological testing of cosmetic active ingredients using 3D human skin cell clusters, live imaging, and proprietary efficacy metrics.</p>
-    <div class="hero-mosaic-image" id="hero-mosaic-image">
-      <img src="images/mosaic.png" alt="Mosaic Imaging Station">
-    </div>
     <div class="offer-tabs">
       <button class="offer-tab active" data-offer="platform" onclick="setOffer('platform')">Preloaded Platform</button>
       <button class="offer-tab" data-offer="service" onclick="setOffer('service')">Analysis Service</button>
@@ -621,9 +655,9 @@ footer {
 <section id="offers">
   <div class="container">
     <div class="section-header">
-      <!-- <span class="label">Three Ways to Access Mosaic</span> -->
-      <h2>One Platform.<br>Three ways to access.</h2>
-      <p>Pick the entry point that will best suit <i>your</i> needs - whether you need immediate testing capability, on-demand analysis, or full laboratory integration.</p>
+      <span class="label">Three Ways to Access Mosaic</span>
+      <h2>One Platform.<br>Your Entry Point.</h2>
+      <p>Whether you need immediate testing capability, on-demand analysis, or full laboratory integration — Mosaic offers a parallel commercial model designed for each buyer profile.</p>
     </div>
     <div class="offer-cards" id="offer-cards">
 
@@ -834,17 +868,17 @@ footer {
                 <div style="font-family:'Cormorant Garamond',serif;color:#fff;font-size:1.1rem;letter-spacing:0.1em;">MOSAIC</div>
                 <div style="font-size:0.6rem;color:rgba(255,255,255,0.45);letter-spacing:0.12em;margin-top:2px;font-family:'DM Mono',monospace;">3D BIOLOGY · REAL INSIGHTS · PROVEN PERFORMANCE</div>
               </div>
-              <div style="background:var(--teal);padding:8px 12px;border-radius:6px;text-align:center;">
+              <div style="background:var(--accent);padding:8px 12px;border-radius:6px;text-align:center;">
                 <div style="font-size:0.55rem;color:rgba(255,255,255,0.7);letter-spacing:0.1em;font-family:'DM Mono',monospace;">MOSAIC</div>
                 <div style="font-size:0.6rem;color:#fff;font-weight:700;letter-spacing:0.08em;font-family:'DM Mono',monospace;">CERTIFIED</div>
                 <div style="font-size:0.55rem;color:rgba(255,255,255,0.7);letter-spacing:0.1em;font-family:'DM Mono',monospace;">PERFORMANCE</div>
               </div>
             </div>
             <div style="padding:24px;">
-              <div style="font-size:0.62rem;letter-spacing:0.14em;color:var(--teal);font-family:'DM Mono',monospace;margin-bottom:4px;">CERTIFICATE OF PERFORMANCE</div>
+              <div style="font-size:0.62rem;letter-spacing:0.14em;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:4px;">CERTIFICATE OF PERFORMANCE</div>
               <div style="font-size:0.58rem;letter-spacing:0.1em;color:var(--text-light);font-family:'DM Mono',monospace;margin-bottom:16px;">PROPRIETARY EFFICACY CERTIFICATION</div>
               <p style="font-size:0.75rem;color:var(--text-mid);margin-bottom:20px;line-height:1.6;">This certifies that the active ingredient listed below has been evaluated using the Mosaic 3D Biological Testing Platform and has demonstrated measurable performance according to Mosaic proprietary efficacy metrics.</p>
-              <div style="margin-bottom:8px;"><div style="font-size:0.6rem;color:var(--teal);font-family:'DM Mono',monospace;letter-spacing:0.1em;">ACTIVE INGREDIENT</div></div>
+              <div style="margin-bottom:8px;"><div style="font-size:0.6rem;color:var(--accent);font-family:'DM Mono',monospace;letter-spacing:0.1em;">ACTIVE INGREDIENT</div></div>
               <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--navy);font-weight:600;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:16px;">RENEWA-PEPTIDE COMPLEX</div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;">
                 <div style="background:var(--bg);border-radius:6px;padding:10px 12px;">
@@ -856,13 +890,13 @@ footer {
                   <div style="font-size:0.75rem;font-weight:600;color:var(--navy);">Mosaic 3D Skin Model™</div>
                 </div>
               </div>
-              <div style="background:var(--teal-pale);border-radius:8px;padding:14px;margin-bottom:16px;">
-                <div style="font-size:0.62rem;color:var(--teal);font-family:'DM Mono',monospace;letter-spacing:0.1em;text-align:center;margin-bottom:12px;">PERFORMANCE SUMMARY</div>
+              <div style="background:var(--accent-pale);border-radius:8px;padding:14px;margin-bottom:16px;">
+                <div style="font-size:0.62rem;color:var(--accent);font-family:'DM Mono',monospace;letter-spacing:0.1em;text-align:center;margin-bottom:12px;">PERFORMANCE SUMMARY</div>
                 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;">
-                  <div><div style="font-size:1rem;font-weight:700;color:var(--teal);">+62%</div><div style="font-size:0.58rem;color:var(--text-mid);">Hydration<br>Boost</div></div>
-                  <div><div style="font-size:1rem;font-weight:700;color:var(--teal);">+48%</div><div style="font-size:0.58rem;color:var(--text-mid);">Barrier<br>Function</div></div>
-                  <div><div style="font-size:1rem;font-weight:700;color:var(--teal);">−41%</div><div style="font-size:0.58rem;color:var(--text-mid);">Inflammatory<br>Response</div></div>
-                  <div><div style="font-size:1rem;font-weight:700;color:var(--teal);">+37%</div><div style="font-size:0.58rem;color:var(--text-mid);">Collagen<br>Stimulation</div></div>
+                  <div><div style="font-size:1rem;font-weight:700;color:var(--accent);">+62%</div><div style="font-size:0.58rem;color:var(--text-mid);">Hydration<br>Boost</div></div>
+                  <div><div style="font-size:1rem;font-weight:700;color:var(--accent);">+48%</div><div style="font-size:0.58rem;color:var(--text-mid);">Barrier<br>Function</div></div>
+                  <div><div style="font-size:1rem;font-weight:700;color:var(--accent);">−41%</div><div style="font-size:0.58rem;color:var(--text-mid);">Inflammatory<br>Response</div></div>
+                  <div><div style="font-size:1rem;font-weight:700;color:var(--accent);">+37%</div><div style="font-size:0.58rem;color:var(--text-mid);">Collagen<br>Stimulation</div></div>
                 </div>
               </div>
               <div style="font-size:0.62rem;color:var(--text-light);border-top:1px solid var(--border);padding-top:12px;line-height:1.6;">This certificate is issued by Mosaic S.r.l. based on proprietary methods and data. It does not constitute a regulatory approval. For cosmetic use documentation only.</div>
@@ -1029,7 +1063,7 @@ let currentOffer = 'platform';
 
 const offerData = {
   platform: {
-    heroTitle:   'The 3D Platform<br>for <em>Ingredient</em><br>Performance',
+    heroTitle:   'The 3D Platform<br>for <em>Ingredient</em><br>Performance.',
     heroSub:     'Mosaic delivers quantitative biological testing of cosmetic active ingredients using 3D human skin cell clusters, live imaging, and proprietary efficacy metrics.',
     heroCta:     'Request the Platform',
     panelTitle:  'MOSAIC PLATFORM DASHBOARD',
@@ -1205,6 +1239,8 @@ const offerData = {
 ═══════════════════════════════════════════════════════════════════ */
 function setOffer(offer) {
   currentOffer = offer;
+  document.body.dataset.offer = offer;
+
   const d = offerData[offer];
 
   // Tabs
@@ -1359,8 +1395,8 @@ function renderExpVisual(type) {
       <svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" style="max-width:340px;width:100%;">
         <!-- Report card -->
         <rect x="60" y="40" width="260" height="200" rx="10" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-        <rect x="60" y="40" width="260" height="32" rx="10" fill="rgba(11,143,126,0.25)"/>
-        <rect x="60" y="60" width="260" height="12" rx="0" fill="rgba(11,143,126,0.25)"/>
+        <rect x="60" y="40" width="260" height="32" rx="10" fill="rgba(var(--accent-rgb), 0.25)"/>
+        <rect x="60" y="60" width="260" height="12" rx="0" fill="rgba(var(--accent-rgb), 0.25)"/>
         <text x="190" y="61" text-anchor="middle" font-family="DM Mono, monospace" font-size="7.5" fill="#12b09c" letter-spacing="2">CERTIFICATE OF PERFORMANCE</text>
         <!-- Metrics bars -->
         ${[
@@ -1370,7 +1406,7 @@ function renderExpVisual(type) {
           {lbl:'Collagen Stimulation',pct:55,y:174}
         ].map(m => `
           <text x="80" y="${m.y-4}" font-family="DM Mono,monospace" font-size="7" fill="rgba(255,255,255,0.4)">${m.lbl}</text>
-          <rect x="80" y="${m.y}" width="${m.pct*1.8}" height="7" rx="3.5" fill="rgba(11,143,126,0.3)"/>
+          <rect x="80" y="${m.y}" width="${m.pct*1.8}" height="7" rx="3.5" fill="rgba(var(--accent-rgb), 0.3)"/>
           <rect x="80" y="${m.y}" width="${m.pct*1.8*0.7}" height="7" rx="3.5" fill="#12b09c" opacity="0.8"/>
           <text x="${80+m.pct*1.8+6}" y="${m.y+6}" font-family="DM Mono,monospace" font-size="7" fill="#12b09c">+${m.pct}%</text>
         `).join('')}
@@ -1390,7 +1426,7 @@ function renderExpVisual(type) {
         <rect x="60" y="85" width="110" height="70" rx="6" fill="#1a2535"/>
         <!-- Screen glow lines -->
         ${[0,1,2,3,4].map(i => `<line x1="65" y1="${95+i*12}" x2="${95+Math.random()*40}" y2="${95+i*12}" stroke="#12b09c" stroke-width="${0.8+Math.random()*0.8}" opacity="${0.3+Math.random()*0.5}"/>`).join('')}
-        <circle cx="90" cy="147" r="14" fill="rgba(11,143,126,0.15)" stroke="#12b09c" stroke-width="0.8"/>
+        <circle cx="90" cy="147" r="14" fill="rgba(var(--accent-rgb), 0.15)" stroke="#12b09c" stroke-width="0.8"/>
         <text x="88" y="151" font-family="DM Mono,monospace" font-size="7" fill="#12b09c">M</text>
         <!-- Monitor -->
         <rect x="205" y="50" width="160" height="130" rx="8" fill="#1a2535" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
