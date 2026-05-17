@@ -692,9 +692,14 @@ footer {
   font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
   font-family: 'DM Mono', monospace;
 }
-.tag-teal { background: var(--teal-pale); color: var(--teal); }
-.tag-gold { background: rgba(176,125,58,0.1); color: var(--gold); }
-.tag-navy { background: rgba(13,28,46,0.08); color: var(--navy); }
+.tag-teal { background: var(--card-accent-pale); color: var(--card-accent); }
+.tag-gold { background: var(--card-accent-pale); color: var(--card-accent); }
+.tag-navy { background: var(--card-accent-pale); color: var(--card-accent); }
+
+
+.tag-teal.offer-card[data-offer="platform"].active { background: var(--teal-pale); color: var(--teal); }
+.tag-gold.offer-card[data-offer="service"].active { background: rgba(176,125,58,0.1); color: var(--gold);  }
+.tag-navy.offer-card[data-offer="hardware"].active { background: rgba(13,28,46,0.08); color: var(--navy); }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
